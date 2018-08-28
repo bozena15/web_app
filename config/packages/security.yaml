@@ -1,0 +1,48 @@
+security:
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        #//name for our provider from DB
+       database_users:
+          #//we want to use user by username
+           entity: { class: App\Entity\User, property: username }
+    encoders:
+            App\Entity\User:
+              algorithm: bcrypt
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true   #//not all users have to be authenticated
+            provider: database_users
+            pattern: ^/       #//firewall allows all url of our application
+
+            form_login:
+              check_path: login   #/route that login form will submit
+              login_path: login    #/user will be redirected that is not yet authenticated, form will be rendered
+              # /csrf_token_generator: security.csrf.token_manager
+              #default_target_path: homepage   #/route to user will be redirected
+
+            logout:
+              path: logout  #/route user go to logout
+              target: /        #/after logout user will be directed to homepage
+            access_denied_handler: App\Security\AccessDeniedHandler
+
+            # activate different ways to authenticate
+
+            #http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+
+    role_hierarchy:
+      #ROLE_ADMIN: ROLE_USER
+      ROLE_SUPER_ADMIN: ROLE_ADMIN

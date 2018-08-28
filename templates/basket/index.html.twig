@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+{% set basket = app.session.get('basket') %}
+
+    {% if error is defined %} {{ error }} {% endif %}
+
+{% if basket is null %}
+    <p> you have no electives in your basket </p>
+
+    {% else %}
+        <ul>
+            {% for course in basket %}
+                <li>
+                    <hr>
+                    {{ course.id }} :: {{ course.description }}
+                <a href="{{ path('basket_delete',{ 'id': course.id }) }}">(remove)</a>
+                </li>
+            {% endfor %}
+        </ul>
+{% endif %}
+    <p>
+        <a href="{{ path('basket_clear') }}">CLEAR all items in basket</a>
+    </p>
+    <p>
+        <a href="{{ path('basket_buy') }}">BUY</a>
+    </p>
+{% endblock %}
+
+
+
+
+
+
+{#{% block body %}#}
+{#<style>#}
+    {#.example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }#}
+    {#.example-wrapper code { background: #F5F5F5; padding: 2px 6px; }#}
+{#</style>#}
+
+{#<div class="example-wrapper">#}
+    {#<h1>Hello {{ controller_name }}! ✅</h1>#}
+
+    {#This friendly message is coming from:#}
+    {#<ul>#}
+        {#<li>Your controller at <code><a href="{{ 'src/Controller/BasketController.php'|file_link(0) }}">src/Controller/BasketController.php</a></code></li>#}
+        {#<li>Your template at <code><a href="{{ 'templates/basket/index.html.twig'|file_link(0) }}">templates/basket/index.html.twig</a></code></li>#}
+    {#</ul>#}
+{#</div>#}
+{#{% endblock %}#}

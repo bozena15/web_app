@@ -1,0 +1,16 @@
+{{ form_start(form) }}
+{#
+    Pola wyświetlane indywidualnie - wybrane form_row zamiast jednego form_widget
+    https://symfony.com/doc/current/form/form_customization.html
+    #}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.fullName) }}
+    {#{{ form_row(form.paidCourses) }}#}
+    {{ form_row(form.notes) }}
+
+    {# Trzeba też dodać ukryty token zabezpieczający csrf jeśli go używamy #}
+    {{ form_widget(form._token) }}
+<button type="submit" class="btn">{{ button_label|default('Save') }}</button>
+{# Wyłączenie renderowania pozostałych pól formularza - render_rest:false #}
+{{ form_end(form, {'render_rest': false}) }}

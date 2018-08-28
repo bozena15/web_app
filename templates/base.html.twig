@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<header>
+{% if is_granted('IS_AUTHENTICATED_FULLY')%}
+
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <a href="{{ url('admin') }}">super admin home</a>
+            Username: <strong>{{ app.user.username }}</strong>
+            <br>
+            <a href="{{ url('logout') }}">logout</a> <br>
+        {% endif %}
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ url('course_list') }}">staff home</a>
+            Username: <strong>{{ app.user.username }}</strong>
+            <br>
+            <a href="{{ url('logout') }}">logout</a> <br>
+
+         {% endif %}
+
+        <br>
+
+        {% if is_granted('ROLE_USER') %}
+
+           <a href="{{ url('course_index') }}">All courses </a> |
+           <a href="{{ url('course_list',{'id': app.user.id}) }}">My courses </a> |
+           <a href="{{ url('user_account',{'id': app.user.id}) }}">My account</a>
+
+        Username: <strong>{{ app.user.username }}</strong>
+            <br>
+            <a href="{{ url('logout') }}">logout</a>
+            <br>
+        {% endif %}
+
+{% else %}
+        <a href="{{ url('login') }}">login</a>
+
+{% endif %}
+
+</header>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <style>
+            header {
+            text-align: right;
+            border-bottom: 0.5rem
+            solid black; padding: 1rem;
+            }
+        </style>
+
+
+    </head>
+
+    {% block body %}
+       {% endblock %}
+        {% block javascripts %}{% endblock %}
+
+</html>

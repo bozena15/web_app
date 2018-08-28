@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+{{ include('course/_form.html.twig') }}
+
+<a href="{{ path('course_list') }}">back to list</a>
+{% endblock %}
